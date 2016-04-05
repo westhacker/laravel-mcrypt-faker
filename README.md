@@ -1,14 +1,28 @@
-# Laravel Without Mcrypt
+# Laravel 5 in openShift Without Mcrypt
+
+By this repo, we can install Laravel 5 in the openshift gear without php mcrypt extension.
 
 This package uses a trick to fool composer into thinking that your system has the PHP Mcrypt extension installed. Allowing you to install Laravel on shared hosts or systems where Mcrypt is not present.
 In addition it provides two service providers `NoEncryptionServiceProvider` and `OpensslEncryptionServiceProvider` for use as an alternative to `Illuminate\Encryption\EncryptionServiceProvider`
 
 ## Installation
 
+### Installing dependencies on the wrong environment is now possible
+
+The new --ignore-platform-reqs flag for the install and update commands lets you install dependencies even if you have the wrong php version or are missing one of the required php extensions. It's not really recommended but it can be useful sometimes if you want to run composer outside a VM for example and you only have the right extensions installed in the VM where you run the code. 
+
+Upload Laravel 5 to your openshift gear, and run
+
+```
+rhc ssh app
+cd app-root/runtime/repo
+composer install --ignore-platform-reqs
+```
+
 Install via composer to an exisiting working Laravel project.
 
 ```
-composer require thomaswelton/laravel-mcrypt-faker
+composer require thomaswelton/laravel-mcrypt-faker --ignore-platform-reqs
 ```
 
 If you are unable to install Laravel via composer due to no having Mcrypt installed then you will need to add this package manually.
